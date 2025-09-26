@@ -101,29 +101,5 @@ The backend requires the following environment variables, which should be placed
 
 An example file (`.env.example`) is provided in the backend directory.
 
-## 📄 API Endpoints
 
-The primary API endpoint provided by the backend is:
 
--   **`POST /api/predict`**
-    -   **Description:** Submits patient information and symptoms to get a disease prediction. It also saves or updates the patient record in the database.
-    -   **Request Body:**
-        ```json
-        {
-          "name": "John Doe",
-          "phone": "1234567890",
-          "address": "123 Main St, Anytown",
-          "gender": "Male",
-          "symptoms": "fever, cough, headache"
-        }
-        ```
-    -   **Response:** A JSON object containing the AI-generated prediction details.
-
-## 👥 Team Members
-
--   MAHAMMAD-INSAF
--   (Add other team members here)
-
----
-
-This project is for educational and demonstrative purposes and is not a substitute for professional medical advice.
