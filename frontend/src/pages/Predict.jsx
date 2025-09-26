@@ -32,7 +32,7 @@ export default function Predict() {
       const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
-        .join('');
+        .join(' ');
       setSymptoms(transcript);
     };
 

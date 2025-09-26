@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getDeepseekPredictions(symptoms) {
+export async function getMedicalPredictions(symptoms) {
   const prompt = `
     Based on the following symptoms: "${symptoms}", provide a medical prediction.
     The response should be a JSON object with the following structure:
@@ -41,10 +41,16 @@ export async function getDeepseekPredictions(symptoms) {
         },
       }
     );
+
+    const content = response.data?.choices?.[0]?.message?.content;
+    if (!content) {
+      throw new Error("Invalid response structure from OpenRouter API");
+    }
+
     // The actual prediction is a JSON string inside the response, so we need to parse it.
-    return JSON.parse(response.data.choices[0].message.content);
+    return JSON.parse(content);
   } catch (error) {
-    console.error("Deepseek API error:", error.message);
+    console.error("OpenRouter API error:", error.message);
     // Return fallback dummy data for development
     return {
       diseases: [{ disease: "Flu", accuracy: 85 }, { disease: "Common Cold", accuracy: 70 }],

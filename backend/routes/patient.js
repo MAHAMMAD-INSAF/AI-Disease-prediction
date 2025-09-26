@@ -1,21 +1,21 @@
 import express from 'express';
 import Patient from '../models/Patient.js';
-import dotenv from 'dotenv';
-import { getDeepseekPredictions } from '../deepseek.js';
+import { getMedicalPredictions } from '../predictionService.js';
 
-dotenv.config();
 const router = express.Router();
 
 // POST /api/patient/predict
 router.post('/predict', async (req, res) => {
   const { name, phone, address, symptoms } = req.body;
-  if (!name || !phone || !address || !symptoms) {
+
+  // More robust validation
+  if ([name, phone, address, symptoms].some(field => typeof field !== 'string' || field.trim() === '')) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
-    // Call DeepSeek API
-    const prediction = await getDeepseekPredictions(symptoms);
+    // Call the prediction service
+    const prediction = await getMedicalPredictions(symptoms);
 
     // Find patient by phone number and update, or create if not found (upsert)
     const patient = await Patient.findOneAndUpdate(

@@ -29,36 +29,36 @@ export default function PatientInfo() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-2 sm:px-6">
+    <div className="max-w-xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold text-blue-700 tracking-tight">Patient Information</h2>
-            <p className="mt-2 text-gray-600">Please provide your basic details.</p>
+            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Patient Information</h1>
+            <p className="mt-2 text-lg text-gray-600">Please provide your basic details to proceed.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="flex items-center gap-4">
-              <FaUser className="text-2xl text-gray-400" />
+            <div className="relative">
+              <FaUser className="absolute top-1/2 left-4 -translate-y-1/2 text-xl text-gray-400" />
               <input
                 type="text" name="name" placeholder="Full Name" required value={name} onChange={(e) => setName(e.target.value)}
-                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg"
+                className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg transition"
               />
             </div>
 
-            <div className="flex items-center gap-4">
-              <FaPhone className="text-2xl text-gray-400" />
+            <div className="relative">
+              <FaPhone className="absolute top-1/2 left-4 -translate-y-1/2 text-xl text-gray-400" />
               <input
                 type="tel" name="phone" placeholder="Phone Number" required value={phone} onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg"
+                className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg transition"
               />
             </div>
 
-            <div className="flex items-start gap-4">
-              <FaMapMarkerAlt className="text-2xl text-gray-400 mt-4" />
+            <div className="relative">
+              <FaMapMarkerAlt className="absolute top-5 left-4 text-xl text-gray-400" />
               <textarea
                 name="address" placeholder="Address" required value={address} onChange={(e) => setAddress(e.target.value)}
-                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg resize-none"
+                className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg resize-none transition"
                 rows="3"
               ></textarea>
             </div>
