@@ -118,12 +118,3 @@ The primary API endpoint provided by the backend is:
         }
         ```
     -   **Response:** A JSON object containing the AI-generated prediction details.
-
-## 👥 Team Members
-
--   MAHAMMAD-INSAF
--   (Add other team members here)
-
----
-
-This project is for educational and demonstrative purposes and is not a substitute for professional medical advice.
