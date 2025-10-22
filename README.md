@@ -72,3 +72,19 @@ An example file (`.env.example`) is provided in the backend directory.
 
 
 
+<<<<<<< HEAD
+=======
+-   **`POST /api/predict`**
+    -   **Description:** Submits patient information and symptoms to get a disease prediction. It also saves or updates the patient record in the database.
+    -   **Request Body:**
+        ```json
+        {
+          "name": "John Doe",
+          "phone": "1234567890",
+          "address": "123 Main St, Anytown",
+          "gender": "Male",
+          "symptoms": "fever, cough, headache"
+        }
+        ```
+    -   **Response:** A JSON object containing the AI-generated prediction details.
+>>>>>>> 54351fb5546d15ba8770166a0095dd7ef7790883
