@@ -37,4 +37,21 @@ router.post('/predict', async (req, res) => {
   }
 });
 
+// GET /api/patient/history
+router.get('/history', async (req, res) => {
+  const { name, phone } = req.query;
+
+  if (!name || !phone) {
+    return res.status(400).json({ error: "Name and phone are required" });
+  }
+
+  try {
+    const patients = await Patient.find({ name, phone }).sort({ createdAt: -1 });
+    res.json(patients);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch patient history" });
+  }
+});
+
 export default router;

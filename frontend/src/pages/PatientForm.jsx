@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { FaUserAlt, FaPhoneAlt, FaHome } from 'react-icons/fa';
+import { FaUserAlt, FaPhoneAlt, FaHome, FaCalendarAlt } from 'react-icons/fa';
 
 export default function PatientForm() {
-  const [form, setForm] = useState({ name: '', phone: '', address: '' });
+  const [form, setForm] = useState({ name: '', phone: '', address: '', dateOfBirth: '' });
   const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -60,6 +60,15 @@ export default function PatientForm() {
               value={form.address}
               onChange={handleChange}
               rows={3}
+              required
+            />
+            <InputField
+              icon={<FaCalendarAlt className="text-purple-600" />}
+              name="dateOfBirth"
+              type="date"
+              placeholder="Date of Birth"
+              value={form.dateOfBirth}
+              onChange={handleChange}
               required
             />
             <Button className="w-full py-4 text-lg mt-2" type="submit">Next</Button>

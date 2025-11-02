@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 shadow-2xl sticky top-0 z-50 py-4">
       <div className="container mx-auto flex justify-between items-center px-6 md:px-12">
-        <motion.h1 
+        <motion.h1
           className="text-3xl font-extrabold text-white tracking-wide select-none"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}

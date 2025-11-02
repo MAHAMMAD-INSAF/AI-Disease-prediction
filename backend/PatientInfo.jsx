@@ -4,14 +4,13 @@ import { motion } from 'framer-motion';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import { FaUser, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
-
 export default function PatientInfo() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
-  // Load data from localStorage when the component mounts
+  // Load data from localStorage when the component 
   useEffect(() => {
     const savedInfo = JSON.parse(localStorage.getItem('patientBasicInfo'));
     if (savedInfo) {
@@ -75,3 +74,4 @@ export default function PatientInfo() {
     </div>
   );
 }
+mounts

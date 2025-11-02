@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import { FaHeartbeat, FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
 import { MdOutlineHealing } from 'react-icons/md';
+import RealTimeFaceHealth from '../components/RealTimeFaceHealth';
 import axios from 'axios';
 
 export default function Predict() {
@@ -94,7 +95,7 @@ export default function Predict() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-2 sm:px-6">
+    <div className="max-w-4xl mx-auto py-12 px-2 sm:px-6">
       <Card className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -108,6 +109,10 @@ export default function Predict() {
             </div>
             <p className="text-gray-600">Describe your symptoms below, or use the microphone to speak.</p>
           </div>
+
+          <RealTimeFaceHealth />
+
+
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="relative flex items-start gap-3">
