@@ -67,6 +67,7 @@ export default function RealTimeFaceHealth() {
     // Ensure video dimensions are valid
     if (video.videoWidth === 0 || video.videoHeight === 0) {
       console.log("Invalid video dimensions");
+      
       return;
     }
 
