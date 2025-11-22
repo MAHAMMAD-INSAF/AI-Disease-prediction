@@ -100,7 +100,7 @@ export default function DiseaseDetails() {
         </motion.div>
       </Card>
        <div className='flex items-center justify-center'>
-        <Button className="px-8 py-3 mt-6 flex items-center gap-3">
+        <Button onClick={() => navigate('/places/nearby')} className="px-8 py-3 mt-6 flex items-center gap-3">
           <FaMapMarkerAlt />
           Nearby medical and hospitals
         </Button>

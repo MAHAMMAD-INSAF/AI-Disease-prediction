@@ -1,2 +1,30 @@
 @import "tailwindcss";
 
+/* Map styling and custom marker styles */
+.leaflet-container {
+	border-radius: 12px;
+}
+
+.user-location-icon {
+	display: inline-block;
+	transform: translateY(-6px);
+}
+
+.place-icon {
+	display: inline-block;
+}
+
+.marker-label {
+	font-size: 12px;
+	color: #0f172a;
+	font-weight: 600;
+	margin-left: 6px;
+}
+
+.popup-content .place-name { font-weight:700; color:#0f172a; }
+.popup-content .place-type { font-size:12px; color:#475569; }
+.popup-content .place-distance { font-size:12px; color:#475569; margin-top:6px }
+
+.map-panel-card { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)); }
+
+

@@ -10,6 +10,7 @@ import Predict from './pages/Predict';
 import Result from './pages/Result';
 import DiseaseDetails from './pages/DiseaseDetails';
 import PrecautionDiet from './pages/PrecautionDiet';
+import NearbyPlacesPage from './pages/NearbyPlacesPage';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function AnimatedRoutes() {
@@ -97,6 +98,20 @@ function AnimatedRoutes() {
               transition={pageTransition}
             >
               <DiseaseDetails />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/places/nearby"
+          element={
+            <motion.div
+              initial="initial"
+              animate="in"
+              exit="out"
+              variants={pageVariants}
+              transition={pageTransition}
+            >
+              <NearbyPlacesPage />
             </motion.div>
           }
         />
