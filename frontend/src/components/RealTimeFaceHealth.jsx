@@ -3,13 +3,15 @@ import Webcam from "react-webcam";
 import * as faceapi from "face-api.js";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function RealTimeFaceHealth() {
+const RealTimeFaceHealth = () => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [condition, setCondition] = useState("Loading...");
   const [dominantEmotion, setDominantEmotion] = useState(null);
   const [detections, setDetections] = useState(null);
   const [isModelReady, setIsModelReady] = useState(false);
+  const [isWebcamReady, setIsWebcamReady] = useState(false);
+  const intervalRef = useRef(null);
 
   const videoConstraints = {
     width: 320,
@@ -21,13 +23,11 @@ export default function RealTimeFaceHealth() {
     const loadModels = async () => {
       const MODEL_URL = "/models";
       try {
-        console.log("Loading models...");
-        // Only load the models we have available
+        setCondition("Loading AI Models...");
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
           faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
         ]);
-        console.log("Models loaded successfully");
         setIsModelReady(true);
         setCondition("Ready to Analyze");
       } catch (error) {
@@ -39,35 +39,22 @@ export default function RealTimeFaceHealth() {
   }, []);
 
   const analyzeFrame = async () => {
-    if (!isModelReady) {
-      console.log("Models not ready yet");
-      return;
-    }
-
-    if (!webcamRef.current || !webcamRef.current.video) {
-      console.log("Webcam not initialized");
-      return;
-    }
-
-    if (!canvasRef.current) {
-      console.log("Canvas not initialized");
+    if (!webcamRef.current || !webcamRef.current.video || !canvasRef.current) {
       return;
     }
 
     const video = webcamRef.current.video;
     const canvas = canvasRef.current;
 
-    if (video.readyState !== 4) {
-      console.log("Video not ready, state:", video.readyState);
+    // Ensure video is ready and has dimensions
+    if (video.readyState !== 4 || video.videoWidth === 0) {
       return;
     }
-
-    console.log("Video dimensions:", video.videoWidth, "x", video.videoHeight);
     
-    // Ensure video dimensions are valid
-    if (video.videoWidth === 0 || video.videoHeight === 0) {
-      console.log("Invalid video dimensions");
-      
+    // Match canvas dimensions to video
+    if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
       return;
     }
 
@@ -77,14 +64,7 @@ export default function RealTimeFaceHealth() {
       canvas.height = video.videoHeight;
       faceapi.matchDimensions(canvas, displaySize);
 
-      const result = await faceapi
-        .detectSingleFace(
-          video, 
-          new faceapi.TinyFaceDetectorOptions({
-            inputSize: 160,
-            scoreThreshold: 0.2
-          })
-        )
+      const result = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
         .withFaceExpressions();
 
       setDetections(result);
@@ -121,16 +101,34 @@ export default function RealTimeFaceHealth() {
   };
 
   useEffect(() => {
-    if (isModelReady) {
-      const interval = setInterval(analyzeFrame, 100); // Increased frequency for better responsiveness
-      return () => clearInterval(interval);
+    if (isModelReady && isWebcamReady) {
+      // Clear any existing interval
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      // Start analysis
+      intervalRef.current = setInterval(analyzeFrame, 200); // Analyze every 200ms
     }
-  }, [isModelReady]);
+
+    // Cleanup function to clear interval when component unmounts or dependencies change
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isModelReady, isWebcamReady]);
+
+  const isLoading = !isModelReady || !isWebcamReady;
 
   return (
-    <div className="flex flex-col items-center gap-4 bg-gray-50 p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-200">
+    <div className="flex flex-col items-center gap-4 bg-white p-6 rounded-2xl shadow-lg border border-gray-200 min-h-[450px]">
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800">🧠 Real-Time Facial Condition</h2>
-      <div className="relative w-full max-w-md mx-auto">
+      <div className="relative w-full max-w-md mx-auto aspect-video flex items-center justify-center bg-gray-200 rounded-xl overflow-hidden">
+        {isLoading && (
+          <div className="absolute z-10 flex flex-col items-center text-gray-600">
+            <svg className="animate-spin h-8 w-8 text-blue-600 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p>{condition}</p>
+          </div>
+        )}
         <Webcam
           audio={false}
           ref={webcamRef}
@@ -138,6 +136,7 @@ export default function RealTimeFaceHealth() {
           videoConstraints={videoConstraints}
           mirrored={true}
           className="rounded-xl"
+          onUserMedia={() => { setCondition("Starting Webcam..."); setIsWebcamReady(true); }}
           style={{
             width: '100%',
             height: 'auto'
@@ -145,7 +144,7 @@ export default function RealTimeFaceHealth() {
         />
         <canvas 
           ref={canvasRef} 
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-0"
         />
       </div>
       <div className="w-full text-center">
@@ -190,3 +189,5 @@ export default function RealTimeFaceHealth() {
     </div>
   );
 }
+
+export default RealTimeFaceHealth;

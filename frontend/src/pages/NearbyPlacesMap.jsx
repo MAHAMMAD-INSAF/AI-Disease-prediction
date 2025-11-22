@@ -23,7 +23,7 @@ export default function NearbyPlacesMap() {
 
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCMwfvw__xjVbB5SF4HM-DnPFHIi0u8kyY", // IMPORTANT: Use an environment variable here
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 

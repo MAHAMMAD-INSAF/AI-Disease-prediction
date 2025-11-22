@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { FaPills, FaAppleAlt, FaExclamationTriangle, FaArrowLeft, FaInfoCircle, FaStethoscope, FaClock } from 'react-icons/fa';
+import { FaPills, FaAppleAlt, FaExclamationTriangle, FaArrowLeft, FaInfoCircle, FaStethoscope, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
+
 
 export default function DiseaseDetails() {
   const { diseaseName } = useParams();
@@ -98,6 +99,12 @@ export default function DiseaseDetails() {
           </motion.div>
         </motion.div>
       </Card>
+       <div className='flex items-center justify-center'>
+        <Button className="px-8 py-3 mt-6 flex items-center gap-3">
+          <FaMapMarkerAlt />
+          Nearby medical and hospitals
+        </Button>
+      </div>
     </div>
   );
 }

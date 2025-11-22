@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import patientRoutes from "./routes/patient.js";
+import placesRoutes from "./routes/places.js";
+import { getMedicalPredictions } from "./predictionService.js";
 
 dotenv.config();
 
@@ -16,7 +18,8 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err => console.error("MongoDB connection error:", err));
 
 // API routes
-app.use("/api", patientRoutes);
+app.use("/api/patients", patientRoutes);
+app.use("/api/places", placesRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
