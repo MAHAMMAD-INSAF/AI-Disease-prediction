@@ -1,0 +1,3 @@
+#!/bin/sh
+# Versioned git hook wrapper (POSIX)
+sh "$(dirname "$0")/../prepush.sh"
