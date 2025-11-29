@@ -14,9 +14,14 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
+if (!process.env.MONGO_URI) {
+	console.error("Missing MONGO_URI environment variable.\nCopy `.env.example` to `.env` and set `MONGO_URI` to your MongoDB connection string.");
+	process.exit(1);
+}
+
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+	.then(() => console.log("MongoDB connected"))
+	.catch(err => console.error("MongoDB connection error:", err));
 
 // API routes
 app.use("/api/patients", patientRoutes);

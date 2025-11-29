@@ -10,7 +10,7 @@ export default function Home() {
     <div
       className="min-h-[calc(100vh-120px)] flex items-center justify-center px-2 sm:px-8" // Adjusted height
       style={{
-        // backgroundImage: `url(${bg})`,
+        backgroundImage: `url(${bg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
