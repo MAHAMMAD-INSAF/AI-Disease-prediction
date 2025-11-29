@@ -1,4 +1,4 @@
-# HealthPredict: AI-Powered Health Assistant
+# HealthPredict: AI-Powered Desease prediction From Symptoms
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
