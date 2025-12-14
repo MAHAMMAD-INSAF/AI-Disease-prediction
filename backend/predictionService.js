@@ -27,7 +27,7 @@ export async function getMedicalPredictions(symptoms) {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "x-ai/grok-4.1-fast",
+        model: "amazon/nova-2-lite-v1:free",
         messages: [
           { role: "system", content: "You are a helpful medical assistant that provides predictions in JSON format." },
           { role: "user", content: prompt }
@@ -42,10 +42,13 @@ export async function getMedicalPredictions(symptoms) {
       }
     );
 
-    const content = response.data?.choices?.[0]?.message?.content;
+    let content = response.data?.choices?.[0]?.message?.content;
     if (!content) {
       throw new Error("Invalid response structure from OpenRouter API");
     }
+
+    // Remove markdown code blocks if present
+    content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
 
     // The actual prediction is a JSON string inside the response, so we need to parse it.
     return JSON.parse(content);

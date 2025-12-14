@@ -35,6 +35,7 @@ function AnimatedRoutes() {
           path="/"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -49,6 +50,7 @@ function AnimatedRoutes() {
           path="/patient-info"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -63,6 +65,7 @@ function AnimatedRoutes() {
           path="/predict"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -77,6 +80,7 @@ function AnimatedRoutes() {
           path="/result"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -91,6 +95,7 @@ function AnimatedRoutes() {
           path="/disease/:diseaseName"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -105,6 +110,7 @@ function AnimatedRoutes() {
           path="/places/nearby"
           element={
             <motion.div
+              className="flex flex-col flex-1"
               initial="initial"
               animate="in"
               exit="out"
@@ -119,6 +125,7 @@ function AnimatedRoutes() {
             path="/disease/:diseaseName/precaution-diet"
             element={
               <motion.div
+                className="flex flex-col flex-1"
                 initial="initial"
                 animate="in"
                 exit="out"
@@ -147,8 +154,8 @@ function App() {
         <div className="flex flex-1">
           {/* Sidebar for desktop & mobile */}
           <Sidebar isOpen={sidebarOpen} toggle={toggleSidebar} />
-          <main className="flex-grow container mx-auto px-2 md:px-8 py-8">
-            <Card className="w-full">
+          <main className="flex-grow container mx-auto px-2 md:px-8 py-8 flex">
+            <Card className="w-full flex flex-col">
               <AnimatedRoutes />
             </Card>
           </main>
@@ -160,5 +167,3 @@ function App() {
 }
 
 export default App;
-
-

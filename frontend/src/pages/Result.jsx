@@ -7,13 +7,17 @@ export default function Result() {
   const navigate = useNavigate();
   const patientInfo = JSON.parse(localStorage.getItem('patientInfo')) || {};
 
-  const predictions = patientInfo.prediction?.diseases || [];
+  // Sort predictions by accuracy and take the top two
+  const topPredictions = (patientInfo.prediction?.diseases || [])
+    .sort((a, b) => b.accuracy - a.accuracy)
+    .slice(0, 2);
 
   const handleDiseaseClick = (diseaseName) => {
     navigate(`/disease/${diseaseName}`);
   };
 
-  if (!patientInfo.name || !predictions.length) {
+  // Check against topPredictions to decide if we should render results
+  if (!patientInfo.name || !topPredictions.length) {
     return (
       <div className="max-w-xl mx-auto p-8 mt-12">
         <Card className="w-full text-center p-10">
@@ -56,7 +60,7 @@ export default function Result() {
 
           {/* Predictions */}
           <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3">
-            {predictions.map((item, index) => (
+            {topPredictions.map((item, index) => (
               <motion.div
                 key={index}
                 className="p-8 bg-white text-gray-800 rounded-2xl shadow-lg border border-gray-200 cursor-pointer overflow-hidden"
