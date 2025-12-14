@@ -1,15 +1,6 @@
 # HealthPredict: AI-Powered Disease Prediction System
 
-<div align="center">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"/>
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"/>
-  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"/>
-  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
-</div>
-
 **HealthPredict** is an intelligent web application designed to provide preliminary disease predictions based on user-submitted symptoms. Leveraging a powerful Large Language Model (LLM), this tool offers a user-friendly interface for patients to input their details and symptoms, receiving instant, AI-driven insights into potential health conditions.
-
 
 ## 🚀 Getting Started
 
@@ -17,74 +8,180 @@ Follow these instructions to set up and run the project on your local machine.
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (v18.x or later recommended)
--   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
--   [MongoDB](https://www.mongodb.com/try/download/community) installed and running locally, or a connection string from MongoDB Atlas.
+- [Node.js](https://nodejs.org/) (v18.x or later recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [MongoDB](https://www.mongodb.com/try/download/community) installed locally or MongoDB Atlas account
 
 ### Installation & Setup
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/MAHAMMAD-INSAF/AI-Disease-prediction.git
-    cd AI-Disease-prediction
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MAHAMMAD-INSAF/AI-Disease-prediction.git
+   cd AI-Disease-prediction
+   ```
 
-2.  **Set up the Backend:**
-    ```bash
-    cd backend
-    npm install
-    ```
-    -   Create a `.env` file in the `backend` directory.
-    -   Copy the contents from `.env.example` into your new `.env` file.
-    -   Update the `MONGO_URI` and `DEEPMED_API_KEY` with your own credentials.
+2. **Set up the Backend:**
+   ```bash
+   cd backend
+   npm install
+   ```
+   - Create a `.env` file in the `backend` directory
+   - Copy the contents from `.env.example` into your new `.env` file
+   - Update the following variables:
+     - `MONGO_URI`: Your MongoDB connection string
+     - `DEEPMED_API_KEY`: Your OpenRouter API key
+     - `PORT`: Server port (default: 5000)
 
-3.  **Set up the Frontend:**
-    ```bash
-    cd ../frontend
-    npm install
-    ```
+3. **Set up the Frontend:**
+   ```bash
+   cd ../frontend
+   npm install
+   ```
 
 ### Running the Application
 
-1.  **Start the Backend Server:**
-    ```bash
-    # From the /backend directory
-    node server.js
-    ```
-    The backend will be running on `http://localhost:5000` (or the port specified in  `.env` file).
+1. **Start the Backend Server:**
+   ```bash
+   # From the /backend directory
+   npm start
+   # or for development
+   npm run dev
+   ```
+   The backend will be running on `http://localhost:5000`
 
-2.  **Start the Frontend Development Server:**
-    ```bash
-    # From the /frontend directory
-    npm run dev
-    ```
-    The frontend application will be available at `http://localhost:5173`.
+2. **Start the Frontend Development Server:**
+   ```bash
+   # From the /frontend directory
+   npm run dev
+   ```
+   The frontend application will be available at `http://localhost:5173`
 
-## ⚙️ Environment Variables
+## 📋 Usage
 
-The backend requires the following environment variables, which should be placed in a `.env` file in the `/backend` directory.
+1. **Patient Registration**: Fill out the patient information form with basic details
+2. **Symptom Input**: Describe your symptoms using text input or voice recognition
+3. **AI Prediction**: Receive instant disease predictions with accuracy percentages
+4. **Detailed Results**: View comprehensive information about predicted diseases
+5. **Nearby Facilities**: Find hospitals and pharmacies in your area using the interactive map
+6. **Face Analysis**: Optional real-time facial expression analysis for additional insights
 
--   `PORT`: The port on which the Express server will run (e.g., `5000`).
--   `MONGO_URI`: Your MongoDB connection string.
--   `DEEPMED_API_KEY`: Your API key from OpenRouter.
+## 🔧 API Documentation
 
-An example file (`.env.example`) is provided in the backend directory.
+### Patient Prediction Endpoint
 
+**POST** `/api/patients/predict`
 
+Submits patient information and symptoms to get a disease prediction. Saves or updates the patient record in the database.
 
-<<<<<<< HEAD
-=======
--   **`POST /api/predict`**
-    -   **Description:** Submits patient information and symptoms to get a disease prediction. It also saves or updates the patient record in the database.
-    -   **Request Body:**
-        ```json
+**Request Body:**
+```json
+{
+  "name": "John Doe",
+  "phone": "1234567890",
+  "address": "123 Main St, Anytown",
+  "symptoms": "fever, cough, headache"
+}
+```
+
+**Response:**
+```json
+{
+  "diseases": [
+    {
+      "disease": "Common Cold",
+      "accuracy": 85,
+      "description": "A viral infection of the upper respiratory tract",
+      "severity": "mild",
+      "recoveryTime": "1-2 weeks",
+      "medications": [
         {
-          "name": "John Doe",
-          "phone": "1234567890",
-          "address": "123 Main St, Anytown",
-          "gender": "Male",
-          "symptoms": "fever, cough, headache"
+          "name": "Acetaminophen",
+          "dosage": "500mg every 6 hours",
+          "purpose": "Pain relief and fever reduction"
         }
-        ```
-    -   **Response:** A JSON object containing the AI-generated prediction details.
->>>>>>> 54351fb5546d15ba8770166a0095dd7ef7790883
+      ],
+      "diet": [
+        "Stay hydrated with warm fluids",
+        "Eat light, nutritious meals"
+      ],
+      "precautions": [
+        "Rest and avoid strenuous activities",
+        "Use tissues when sneezing"
+      ]
+    }
+  ],
+  "recommendations": "Consult a healthcare professional for persistent symptoms"
+}
+```
+
+### Patient History Endpoint
+
+**GET** `/api/patients/history`
+
+Retrieves patient prediction history.
+
+**Query Parameters:**
+- `name`: Patient name
+- `phone`: Patient phone number
+
+### Nearby Places Endpoint
+
+**POST** `/api/places/nearby-free`
+
+Finds nearby medical facilities using OpenStreetMap data.
+
+**Request Body:**
+```json
+{
+  "lat": 40.7128,
+  "lng": -74.0060,
+  "radius": 3000
+}
+```
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 19**: Modern JavaScript library for building user interfaces
+- **Vite**: Fast build tool and development server
+- **Tailwind CSS**: Utility-first CSS framework
+- **Framer Motion**: Animation library for React
+- **Leaflet**: Interactive maps
+- **Face-API.js**: Facial recognition and expression analysis
+- **React Webcam**: Webcam integration
+
+### Backend
+- **Node.js**: JavaScript runtime
+- **Express.js**: Web application framework
+- **MongoDB**: NoSQL database
+- **Mongoose**: MongoDB object modeling
+- **Axios**: HTTP client
+- **OpenRouter API**: AI model integration
+
+## 🤝 Contributing
+
+We welcome contributions to HealthPredict! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⚠️ Disclaimer
+
+HealthPredict is designed for educational and informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for medical concerns.
+
+## 📞 Support
+
+If you have any questions or need support, please open an issue on GitHub or contact the maintainers.
+
+---
+
+<div align="center">
+  <p>Made with ❤️ for better healthcare accessibility</p>
+</div>

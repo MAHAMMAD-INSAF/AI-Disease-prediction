@@ -23,5 +23,21 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    devSourcemap: false,
+    preprocessorOptions: {
+      scss: {
+        additionalData: '',
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ['react.svg'],
+    },
+  },
+  optimizeDeps: {
+    exclude: ['react.svg'],
+  },
 })
 
