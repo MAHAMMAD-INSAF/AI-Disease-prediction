@@ -158,30 +158,5 @@ Finds nearby medical facilities using OpenStreetMap data.
 - **Axios**: HTTP client
 - **OpenRouter API**: AI model integration
 
-## 🤝 Contributing
 
-We welcome contributions to HealthPredict! Please follow these steps:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## ⚠️ Disclaimer
-
-HealthPredict is designed for educational and informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for medical concerns.
-
-## 📞 Support
-
-If you have any questions or need support, please open an issue on GitHub or contact the maintainers.
-
----
-
-<div align="center">
-  <p>Made with ❤️ for better healthcare accessibility</p>
-</div>
