@@ -40,6 +40,15 @@ Follow these instructions to set up and run the project on your local machine.
 
 ### Running the Application
 
+#### Option 1: Run Both Frontend and Backend Concurrently (Recommended)
+```bash
+# From the root directory
+npm run dev
+```
+This command will start both the backend server on `http://localhost:5000` and the frontend development server on `http://localhost:5173` simultaneously.
+
+#### Option 2: Run Separately
+
 1. **Start the Backend Server:**
    ```bash
    # From the /backend directory
