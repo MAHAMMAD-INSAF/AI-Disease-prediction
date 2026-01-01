@@ -16,7 +16,7 @@ export default function SymptomsPage() {
 
     try {
       // This endpoint should match your backend route, e.g., /api/patients/predict
-      const response = await axios.post("http://localhost:5000/api/patients/predict", { symptoms });
+      const response = await axios.post("/api/patients/predict", { symptoms });
       setPrediction(response.data.prediction);
     } catch (err) {
       setError("Failed to get prediction. Please check the console for details.");

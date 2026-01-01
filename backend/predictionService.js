@@ -27,7 +27,7 @@ export async function getMedicalPredictions(symptoms) {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "amazon/nova-2-lite-v1:free",
+        model: "nvidia/nemotron-3-nano-30b-a3b:free",
         messages: [
           { role: "system", content: "You are a helpful medical assistant that provides predictions in JSON format." },
           { role: "user", content: prompt }

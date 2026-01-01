@@ -97,9 +97,8 @@ export default function Predict() {
     };
 
     try {
-      // --- THIS IS THE FIX ---
-      // The URL is corrected from '/api/predict' to '/api/patients/predict'
-      const response = await axios.post('http://localhost:5000/api/patients/predict', formData);
+      // --- Use same-origin endpoint so this works on Vercel too ---
+      const response = await axios.post('/api/patients/predict', formData);
       
       // Store the full prediction result
       localStorage.setItem('patientInfo', JSON.stringify({ ...patientInfo, symptoms, prediction: response.data }));

@@ -72,7 +72,7 @@ This command will start both the backend server on `http://localhost:5000` and t
 3. **AI Prediction**: Receive instant disease predictions with accuracy percentages
 4. **Detailed Results**: View comprehensive information about predicted diseases
 5. **Nearby Facilities**: Find hospitals and pharmacies in your area using the interactive map
-6. **Face Analysis**: Optional real-time facial expression analysis for additional insights
+
 
 ## 🔧 API Documentation
 
