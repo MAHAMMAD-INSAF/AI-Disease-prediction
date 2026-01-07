@@ -65,6 +65,16 @@ This command will start both the backend server on `http://localhost:5000` and t
    ```
    The frontend application will be available at `http://localhost:5173`
 
+## Deployment
+
+For deployment instructions (Vercel frontend + Render/Railway backend) see `DEPLOY.md`.
+
+Quick notes:
+
+- **Frontend**: Deploy the `frontend` folder to Vercel. Set `VITE_API_BASE_URL` (in Vercel project settings) to your backend URL (e.g., `https://my-backend.onrender.com`).
+- **Backend**: Deploy the `backend` folder to Render or Railway. Add `MONGO_URI` to the service environment variables.
+- If you want me to deploy the backend for you, tell me which provider you prefer (Render or Railway) and I’ll provide exact steps or prepare any required CORS updates.
+
 ## 📋 Usage
 
 1. **Patient Registration**: Fill out the patient information form with basic details

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: disease-prediction-backend
+    env: node
+    plan: free
+    branch: main
+    region: oregon
+    path: backend
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: MONGO_URI
+      - key: FRONTEND_URL
+      - key: DEEPMED_API_KEY
+
+# Note: Add this file to your repo. When you connect the repo on Render,
+# Render will detect this manifest and create a service for the backend.
+# After creating the service, set the actual values for MONGO_URI / FRONTEND_URL
+# in the Render dashboard's Environment tab (do not hardcode secrets in the repo).

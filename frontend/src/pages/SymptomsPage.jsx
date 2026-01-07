@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import RealTimeFaceHealth from "../components/RealTimeFaceHealth";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 export default function SymptomsPage() {
   const [symptoms, setSymptoms] = useState("");
   const [prediction, setPrediction] = useState(null);
@@ -16,7 +18,7 @@ export default function SymptomsPage() {
 
     try {
       // This endpoint should match your backend route, e.g., /api/patients/predict
-      const response = await axios.post("/api/patients/predict", { symptoms });
+      const response = await axios.post(`${API_BASE}/api/patients/predict`, { symptoms });
       setPrediction(response.data.prediction);
     } catch (err) {
       setError("Failed to get prediction. Please check the console for details.");

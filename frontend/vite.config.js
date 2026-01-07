@@ -17,7 +17,7 @@ export default defineConfig({
     // Proxy `/api` calls to backend during development
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://ai-disease-prediction-7711.onrender.com',
         changeOrigin: true,
         secure: false,
       },

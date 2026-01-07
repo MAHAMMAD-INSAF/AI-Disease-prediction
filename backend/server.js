@@ -10,7 +10,15 @@ import { getMedicalPredictions } from "./predictionService.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// Configure CORS: prefer explicit FRONTEND_URL in production, fallback to allow all (useful for local/dev)
+const FRONTEND_URL = process.env.FRONTEND_URL;
+if (FRONTEND_URL) {
+	app.use(cors({ origin: FRONTEND_URL }));
+} else {
+	app.use(cors());
+}
+
 app.use(express.json());
 
 // Connect to MongoDB

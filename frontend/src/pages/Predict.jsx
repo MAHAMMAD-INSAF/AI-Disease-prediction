@@ -8,6 +8,8 @@ import { FaStethoscope, FaMicrophone } from 'react-icons/fa';
 import { toast } from 'sonner';
 import RealTimeFaceHealth from '../components/RealTimeFaceHealth';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 export default function Predict() {
   const [symptoms, setSymptoms] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -97,8 +99,8 @@ export default function Predict() {
     };
 
     try {
-      // --- Use same-origin endpoint so this works on Vercel too ---
-      const response = await axios.post('/api/patients/predict', formData);
+      // Use environment-configured API base (VITE_API_BASE_URL) or default to localhost
+      const response = await axios.post(`${API_BASE}/api/patients/predict`, formData);
       
       // Store the full prediction result
       localStorage.setItem('patientInfo', JSON.stringify({ ...patientInfo, symptoms, prediction: response.data }));

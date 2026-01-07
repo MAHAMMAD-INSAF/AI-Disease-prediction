@@ -3,6 +3,8 @@ import axios from 'axios';
 import { MapContainer, TileLayer, Marker, Popup, useMap, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 // Helper component to move map to user's location when it becomes available
 function RecenterMap({ lat, lng }) {
   const map = useMap();
@@ -56,7 +58,7 @@ export default function NearbyMedicalMapOSM() {
 
         try {
           // Send coordinates + radius to backend route which calls Overpass API
-          const res = await axios.post('/api/places/nearby-free', { lat, lng, radius });
+          const res = await axios.post(`${API_BASE}/api/places/nearby-free`, { lat, lng, radius });
           const fetched = res.data.places || [];
 
           // annotate with distance and filter client-side as well
