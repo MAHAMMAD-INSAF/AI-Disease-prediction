@@ -36,13 +36,37 @@ router.post('/nearby-free', async (req, res) => {
 
     const overpassUrl = 'https://overpass-api.de/api/interpreter';
 
-    // POST the raw query as text/plain to Overpass
+    // POST the raw query to Overpass.
+    // Some Overpass deployments expect a plain-text body and may reject certain content negotiation.
+    // Also add a descriptive User-Agent (some proxies block missing/unknown agents).
     const overpassRes = await axios.post(overpassUrl, query, {
-      headers: { 'Content-Type': 'text/plain' },
+      headers: {
+        'Content-Type': 'text/plain',
+        'User-Agent': 'DiseasePrediction/1.0 (nearby-free-overpass)',
+        'Accept': 'application/json',
+      },
       timeout: 30000,
+      // Avoid axios default transform that could affect plain-text body handling.
+      transformResponse: [(data) => data],
+      validateStatus: () => true,
     });
 
-    const elements = overpassRes.data?.elements || [];
+    if (overpassRes.status < 200 || overpassRes.status >= 300) {
+      throw Object.assign(new Error(`Overpass request failed with status ${overpassRes.status}`), {
+        response: { status: overpassRes.status, data: overpassRes.data },
+      });
+    }
+
+    // Overpass returns JSON; axios transformResponse above leaves raw string/body.
+    const parsed = typeof overpassRes.data === 'string' ? (() => {
+      try {
+        return JSON.parse(overpassRes.data);
+      } catch {
+        return null;
+      }
+    })() : overpassRes.data;
+
+    const elements = parsed?.elements || [];
 
     // Map Overpass elements to a cleaned response
     const places = elements.map((el) => {
@@ -71,10 +95,31 @@ router.post('/nearby-free', async (req, res) => {
     });
 
     return res.json({ count: places.length, places });
+
   } catch (err) {
-    console.error('Overpass error:', err?.message || err);
-    return res.status(500).json({ error: 'Failed to fetch nearby places from Overpass API' });
+    // Axios errors typically have: err.response, err.request, err.config
+    // Add detailed logging so we can see Overpass failure reasons.
+    if (err?.response) {
+      const status = err.response.status;
+      const data = err.response.data;
+      console.error('Overpass error (response):', {
+        status,
+        // Avoid dumping huge payloads
+        dataType: typeof data,
+        dataPreview: typeof data === 'string' ? data.slice(0, 500) : JSON.stringify(data)?.slice(0, 500),
+      });
+    } else if (err?.request) {
+      console.error('Overpass error (no response):', {
+        message: err?.message,
+        requestType: typeof err?.request,
+      });
+    } else {
+      console.error('Overpass error (setup):', err?.message || err);
+    }
+
+    return res.status(502).json({ error: 'Failed to fetch nearby places from Overpass API' });
   }
 });
+
 
 export default router;

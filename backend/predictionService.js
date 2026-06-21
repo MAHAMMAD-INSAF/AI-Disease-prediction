@@ -1,14 +1,14 @@
 import axios from "axios";
 
-export async function getMedicalPredictions(symptoms) {
+export async function getMedicalPredictions(symptoms) {``
   const prompt = `
     Based on the following symptoms: "${symptoms}", provide a medical prediction.
     The response should be a JSON object with the following structure:
     {
       "diseases": [
-        {
+        {percentage
           "disease": "Name of Disease",
-          "accuracy": percentage,
+          "accuracy": ,
           "description": "A brief description of the disease.",
           "severity": "mild, moderate, or severe",
           "recoveryTime": "Estimated recovery time, e.g., '1-2 weeks'",
@@ -27,7 +27,7 @@ export async function getMedicalPredictions(symptoms) {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "nvidia/nemotron-3-nano-30b-a3b:free",
+        model: "cohere/north-mini-code:free",
         messages: [
           { role: "system", content: "You are a helpful medical assistant that provides predictions in JSON format." },
           { role: "user", content: prompt }

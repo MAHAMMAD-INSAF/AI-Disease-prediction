@@ -21,22 +21,28 @@ if (FRONTEND_URL) {
 
 app.use(express.json());
 
-// Connect to MongoDB
-if (!process.env.MONGO_URI) {
-	console.error("Missing MONGO_URI environment variable.\nCopy `.env.example` to `.env` and set `MONGO_URI` to your MongoDB connection string.");
-	process.exit(1);
-}
-
-mongoose.connect(process.env.MONGO_URI)
-	.then(() => console.log("MongoDB connected"))
-	.catch(err => console.error("MongoDB connection error:", err));
-
 // API routes
 app.use("/api/patients", patientRoutes);
 app.use("/api/places", placesRoutes);
 // Free Overpass-based places route: POST /api/places/nearby-free
 app.use("/api/places", placesFreeRoutes);
 
-// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+async function startServer() {
+	if (!process.env.MONGO_URI) {
+		console.error("Missing MONGO_URI environment variable.\nCopy `.env.example` to `.env` and set `MONGO_URI` to your MongoDB connection string.");
+		process.exit(1);
+	}
+
+	try {
+		await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
+		console.log("MongoDB connected");
+		app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+	} catch (err) {
+		console.error("MongoDB connection error:", err);
+		process.exit(1);
+	}
+}
+
+startServer();
